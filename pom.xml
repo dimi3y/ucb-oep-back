@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ru.cinimex</groupId>
+    <artifactId>ru.cinimex</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name></name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.wildfly>12.0.0.CR1</version.wildfly>
+        <version.wildfly.maven.plugin>1.0.0.Beta1</version.wildfly.maven.plugin>
+        <version.arquillian.container>8.0.0.CR1</version.arquillian.container>
+        <version.jboss.bom>1.0.5.Final</version.jboss.bom>
+        <version.jboss.spec.javaee7>1.0.0.Final</version.jboss.spec.javaee7>
+        <version.org.hibernate>4.3.1.Final</version.org.hibernate>
+        <version.org.richfaces>4.3.5.Final</version.org.richfaces>
+        <version.shrinkwrap.resolver>2.0.0</version.shrinkwrap.resolver>
+        <version.junit>4.11</version.junit>
+        <version.org.apache.httpcomponents>4.1.4</version.org.apache.httpcomponents>
+        <version.dom4j>1.6</version.dom4j>
+        <version.javax.servlet.jstl>1.2</version.javax.servlet.jstl>
+        <version.log4j>1.2.16</version.log4j>
+        <version.org.eclipse.m2e>1.0.0</version.org.eclipse.m2e>
+        <version.org.apache.wicket>1.5.5</version.org.apache.wicket>
+        <version.net.ftlines.wicket-cdi>1.2</version.net.ftlines.wicket-cdi>
+        <version.ro.isdc.wro4j>1.4.4</version.ro.isdc.wro4j>
+        <com.ocpsoft.prettyfaces.version>3.3.2</com.ocpsoft.prettyfaces.version>
+        <org.jboss.weld.servlet.version>1.1.8.Final</org.jboss.weld.servlet.version>
+        <com.sun.faces.jsf.impl.version>2.0.2</com.sun.faces.jsf.impl.version>
+        <version.war.plugin>3.2.2</version.war.plugin>
+        <version.org.codehaus.mojo.gwt.maven.plugin>2.4.0</version.org.codehaus.mojo.gwt.maven.plugin>
+        <version.exec.plugin>1.2.1</version.exec.plugin>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-all-7.0</artifactId>
+                <version>${version.jboss.spec.javaee7}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>3.0.5.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.servlet</groupId>
+            <artifactId>jboss-servlet-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.jms</groupId>
+            <artifactId>jboss-jms-api_2.0_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jboss/jboss-annotations-ejb3 -->
+        <dependency>
+            <groupId>jboss</groupId>
+            <artifactId>jboss-annotations-ejb3</artifactId>
+            <version>4.2.2.GA</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>openshift</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>${version.war.plugin}</version>
+                        <configuration>
+                            <outputDirectory>deployments</outputDirectory>
+                            <warName>ROOT</warName>
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>
